@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    container_name: money-manager-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: "davi-valcir"
+      POSTGRES_PASSWORD: "B4c0nC4n8294r23Ad3ncEHhJolefdkÇLDF"
+      POSTGRES_DB : "money_manager"
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./.docker/database/init:/docker-entrypoint-initdb.d
+    networks:
+      - money_manager-network
+    
+networks:
+  money_manager-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
