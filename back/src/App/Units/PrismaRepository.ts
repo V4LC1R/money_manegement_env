@@ -1,4 +1,5 @@
-import { IRepository } from "../@types/Interfaces";
+import { IRepository } from "@myTypes/Interfaces";
+
 
 export class PrismaRepository<T> implements IRepository<T> {
     private model: any;

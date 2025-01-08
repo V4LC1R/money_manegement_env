@@ -1,5 +1,5 @@
+import { IRouterProvider } from "@myTypes/Interfaces";
 import { Router } from "express";
-import { IRouterProvider } from "../@types/Interfaces";
 
 export class RouteProvider implements IRouterProvider {
   routes: Router = Router();
