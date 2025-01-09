@@ -55,7 +55,7 @@ model Recurrence {
 
 model Account {
   id            Int @id @default(autoincrement())
-  drescription  String @db.VarChar(512)
+  description  String @db.VarChar(512)
   balance       Float @db.DoublePrecision // valor total da conta
   userId        Int
   categoryId    Int

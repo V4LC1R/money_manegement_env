@@ -1,13 +1,47 @@
 import { Request, Response } from "express";
 import { AccountService } from "../Services/AccountService";
 
-export class AccontController {
-  async index(request: Request, response: Response) {
+export class AccountController {
+  async index(request: Request, response: Response,):Promise<any> {
     try {
-        const accounts = await AccountService.getAccounts();
+        const data = request.params;
 
-        return response.status(200).json(accounts);
+        const accounts = await AccountService.getAccounts(data);
+
+        const status = accounts && accounts?.length > 0  ? 200 : 204
+
+        return response.status(status).json(accounts);
     } catch (error) {
+      console.log(error);
+      return response.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async show(request:Request, response:Response): Promise<any> {
+    try{
+      const {id} = request.params
+
+      const account = await AccountService.getAccount(parseInt(id))
+
+      const status = account ? 200 : 204
+
+      return response.status(status).json(status)
+    }catch(error) {
+      console.log(error);
+      return response.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  async store(request:Request, response:Response): Promise<any> {
+    try{
+      const {body} = request
+
+      const account = await AccountService.create()
+
+      const status = account ? 200 : 204
+
+      return response.status(status).json(status)
+    }catch(error) {
       console.log(error);
       return response.status(500).json({ message: "Internal server error" });
     }
