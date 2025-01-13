@@ -20,7 +20,7 @@ export class PrismaRepository<T> implements IRepository<T> {
       return await this.model.findMany();
     }
   
-    async create(data: Partial<T>): Promise<T> {
+    async create(data: any): Promise<T> {
       return await this.model.create({ data });
     }
   
