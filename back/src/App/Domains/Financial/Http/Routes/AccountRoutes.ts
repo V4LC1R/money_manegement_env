@@ -10,6 +10,8 @@ export function AccountRoutes():Router {
     router.get("/", accountController.index);
     router.get("/:id",accountController.show)
     router.post("/", accountController.store)
+    router.delete("/:id", accountController.destroy)
+    router.put("/:id", accountController.update)
 
     return router;
 }

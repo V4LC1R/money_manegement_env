@@ -24,7 +24,7 @@ export class PrismaRepository<T> implements IRepository<T> {
       return await this.model.create({ data });
     }
   
-    async update(id: number, data: Partial<T>): Promise<T | null> {
+    async update(id: number, data: any): Promise<T | null> {
       return await this.model.update({
         where: { id },
         data,

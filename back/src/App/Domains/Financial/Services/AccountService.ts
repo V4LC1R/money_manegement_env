@@ -40,4 +40,28 @@ export class AccountService {
             throw new Error("Internal server error");
         }
     }
+
+    static async delete(id:number)
+    {
+        try{
+            return await AccountService
+                .repo
+                .delete(id)
+        } catch (error){
+            console.log(error);
+            throw new Error("Internal server error");
+        }
+    }
+
+    static async update(id:number,data:Prisma.AccountUpdateInput | Prisma.AccountUncheckedUpdateInput)
+    {
+        try{
+            return await AccountService
+                .repo
+                .update(id,data)
+        } catch (error){
+            console.log(error);
+            throw new Error("Internal server error");
+        }
+    }
 }
