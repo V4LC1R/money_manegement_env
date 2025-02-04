@@ -1,6 +1,7 @@
 
 import { Account, Prisma } from "@prisma/client";
 import { AccountRepository } from "../Repositories/AccountRepository";
+import { AppError } from "@units/Errors/AppError";
 
 export class AccountService {
 
@@ -29,7 +30,7 @@ export class AccountService {
         }
     }
 
-    static async create(data: Prisma.AccountCreateInput | Prisma.AccountUncheckedCreateInput)
+    static async create(data: Prisma.AccountCreateInput | Prisma.AccountUncheckedCreateInput): Promise<Account>
     {
         try{
             return await AccountService
@@ -37,11 +38,11 @@ export class AccountService {
                 .create(data)
         }catch (error){
             console.log(error);
-            throw new Error("Internal server error");
+            throw new AppError("Internal server error");
         }
     }
 
-    static async delete(id:number)
+    static async delete(id:number) : Promise<boolean>
     {
         try{
             return await AccountService
@@ -49,11 +50,11 @@ export class AccountService {
                 .delete(id)
         } catch (error){
             console.log(error);
-            throw new Error("Internal server error");
+            throw new AppError("Internal server error");
         }
     }
 
-    static async update(id:number,data:Prisma.AccountUpdateInput | Prisma.AccountUncheckedUpdateInput)
+    static async update(id:number,data:Prisma.AccountUpdateInput | Prisma.AccountUncheckedUpdateInput): Promise<Account | null>
     {
         try{
             return await AccountService
@@ -61,7 +62,7 @@ export class AccountService {
                 .update(id,data)
         } catch (error){
             console.log(error);
-            throw new Error("Internal server error");
+            throw new AppError("Internal server error");
         }
     }
 }

@@ -1,8 +1,7 @@
 import {ZodError} from 'zod'
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AccountService } from "../../Services/AccountService";
 import { AccountCreateOneSchema, AccountUpdateOneSchema } from "prisma/generated/schemas";
-import { Account } from '@prisma/client';
 
 export class AccountController {
 
@@ -36,9 +35,11 @@ export class AccountController {
     }
   }
 
-  async store(request:Request, response:Response): Promise<any> {
+  async store(request:Request, response:Response,next:NextFunction): Promise<any> {
     try{
       const {body} = request
+
+      console.log(body);
 
       const {data} = AccountCreateOneSchema.parse(body)
 
@@ -49,23 +50,11 @@ export class AccountController {
       return response.status(status).json(status)
     }catch(error: ZodError | any) {
 
-      let errorContent:any = { message: "Internal server error" }
-      let errorStatus = 500
-      
-      if(error instanceof ZodError)
-        errorContent = {
-          message:"Input data Error",
-          desciption:error.formErrors
-        }
-
-      //retornar erro de validacao
-      console.log(error)
-
-      return response.status(errorStatus).json(errorContent);
+     return next(error);
     }
   }
 
-  async destroy(request:Request, response:Response): Promise<any>
+  async destroy(request:Request, response:Response, next:NextFunction): Promise<any>
   {
     try{
       const {id} = request.params
@@ -74,8 +63,7 @@ export class AccountController {
 
       return response.status(200).json({message:"Account was deleted!!"})
     }catch(error){
-      console.log(error);
-      return response.status(500).json({ message: "Internal server error" });
+      next(error);
     }
   }
 

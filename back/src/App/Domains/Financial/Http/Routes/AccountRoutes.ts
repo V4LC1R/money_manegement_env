@@ -1,4 +1,3 @@
-
 import { Router } from 'express';
 import { AccountController } from '../Controllers/AccountController';
 
