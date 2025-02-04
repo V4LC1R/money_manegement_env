@@ -30,7 +30,7 @@ export class AccountService {
         }
     }
 
-    static async create(data: Prisma.AccountCreateInput | Prisma.AccountUncheckedCreateInput): Promise<Account>
+    static async create(data:Partial<Account>): Promise<Account>
     {
         try{
             return await AccountService

@@ -11,6 +11,7 @@ export class ZodErrorHandler extends aBaseErrorHandler<ZodError> {
 
     // Formata o erro do Zod
     format(err: ZodError, req: Request, res: Response) {
+        console.log(err);
         return res.status(400).json({
             status: 'Validation Error',
             message: 'Erro de validação',
