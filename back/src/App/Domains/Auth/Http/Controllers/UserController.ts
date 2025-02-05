@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { UserService } from '../../Services/UserService';
 import { UserRequest } from "../Request/UserRequest";
 
-export class AccountController {
+export class UserController {
 
   async show(request:Request, response:Response, next:NextFunction): Promise<any> {
     try{
@@ -20,7 +20,6 @@ export class AccountController {
 
   async store(request:Request, response:Response, next:NextFunction): Promise<any> {
     try{
-
       const data = UserRequest.create(request.body)
 
       const user = await UserService.create(data)
