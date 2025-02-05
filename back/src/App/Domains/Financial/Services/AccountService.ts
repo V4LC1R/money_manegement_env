@@ -1,7 +1,9 @@
 
 import { Account, Prisma } from "@prisma/client";
-import { AccountRepository } from "../Repositories/AccountRepository";
+
 import { AppError } from "@units/Errors/AppError";
+
+import { AccountRepository } from "../Repositories/AccountRepository";
 
 export class AccountService {
 

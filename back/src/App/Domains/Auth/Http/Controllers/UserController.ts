@@ -1,11 +1,10 @@
-import {ZodError} from 'zod'
-import { Request, Response } from "express";
-import { UserCreateOneSchema } from "prisma/generated/schemas";
+import { Request, Response, NextFunction } from "express";
 import { UserService } from '../../Services/UserService';
+import { UserRequest } from "../Request/UserRequest";
 
 export class AccountController {
 
-  async show(request:Request, response:Response): Promise<any> {
+  async show(request:Request, response:Response, next:NextFunction): Promise<any> {
     try{
       const {id} = request.params
 
@@ -15,36 +14,22 @@ export class AccountController {
 
       return response.status(status).json(status)
     }catch(error) {
-      console.log(error);
-      throw error
+      next(error);
     }
   }
 
-  async store(request:Request, response:Response): Promise<any> {
+  async store(request:Request, response:Response, next:NextFunction): Promise<any> {
     try{
-      const {body} = request
 
-      const {data} = UserCreateOneSchema.parse(body)
+      const data = UserRequest.create(request.body)
 
-      const passwordEncript = data.password
-
-      const user = await UserService.create({...data,password:passwordEncript})
+      const user = await UserService.create(data)
 
       const status = user ? 201 : 204
 
       return response.status(status).json(status)
-    }catch(error: ZodError | any) {
-
-      let errorContent:any = { message: "Internal server error" }
-      let errorStatus = 500
-      
-      if(error instanceof ZodError)
-        errorContent = {
-          message:"Input data Error",
-          desciption:error.formErrors
-        }
-
-      return response.status(errorStatus).json(errorContent);
+    }catch(error) {
+      next(error);
     }
   }
 }

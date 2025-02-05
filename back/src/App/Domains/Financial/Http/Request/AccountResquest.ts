@@ -20,7 +20,7 @@ export class AccountRequest
             description: z.string(),
             type: z.string(),
             balance: z.number(),
-            userId: z.number(),
+            userId: z.number()
         }).parse(data)
     }
 }

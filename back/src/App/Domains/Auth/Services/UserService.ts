@@ -1,5 +1,6 @@
 import { Prisma, User } from "@prisma/client";
 import { UserRepository } from "../Repository/UserRepository";
+import { AppError } from "@units/Errors/AppError";
 
 export class UserService {
 
@@ -12,8 +13,7 @@ export class UserService {
                 .repo
                 .create(data);
         } catch (error) {
-            console.log(error);
-            throw new Error("Internal server error");
+            throw new AppError("Internal server error",500);
         }
     }
 
@@ -24,8 +24,7 @@ export class UserService {
                 .repo
                 .findById(id);
         } catch (error) {
-            console.log(error);
-            throw new Error("Internal server error");
+            throw new AppError("Internal server error",500);
         }
     }
 }
